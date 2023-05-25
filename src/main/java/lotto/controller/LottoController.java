@@ -14,7 +14,7 @@ public class LottoController {
         this.outputView = outputView;
     }
 
-    public static LottoController from(InputView inputView, OutputView outputView) {
+    public static LottoController of(InputView inputView, OutputView outputView) {
         return new LottoController(inputView, outputView);
     }
 
