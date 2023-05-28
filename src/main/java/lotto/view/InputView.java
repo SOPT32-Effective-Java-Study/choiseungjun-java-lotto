@@ -2,6 +2,8 @@ package lotto.view;
 
 import camp.nextstep.edu.missionutils.Console;
 
+import java.util.List;
+
 public class InputView {
 
     private final OutputView outputView = OutputView.newInstance();
@@ -20,6 +22,7 @@ public class InputView {
 
         return amount;
     }
+
 
     private String read() {
         return Console.readLine();
