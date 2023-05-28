@@ -41,7 +41,10 @@ public class Money {
     }
 
     private void validateAmountValue(int amount) {
-        if (amount % MONEY_AMOUNT_UNIT != 0) {
+        if ((amount % MONEY_AMOUNT_UNIT) != 0) {
+            throw new IllegalArgumentException(MONEY_AMOUNT_UNIT_ERROR_MESSAGE);
+        }
+        if (amount == 0) {
             throw new IllegalArgumentException(MONEY_AMOUNT_UNIT_ERROR_MESSAGE);
         }
     }
