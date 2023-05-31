@@ -6,7 +6,11 @@ import lotto.domain.Money;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static lotto.constant.ErrorMessage.NUMBER_FORMAT_ERROR_MESSAGE;
 
 public class LottoController {
 
@@ -27,7 +31,8 @@ public class LottoController {
 
         Money money = inputPurchaseAmount();
         List<Lotto> lottos = purchaseLotto(money, lottoMachine);
-        outputView.printPurchaseLottoList(lottos);
+
+        inputWinningLotto();
     }
 
     private Money inputPurchaseAmount() {
@@ -42,11 +47,37 @@ public class LottoController {
 
     private List<Lotto> purchaseLotto(Money money, LottoMachine lottoMachine) {
         try {
-            return lottoMachine.generate(money);
+            List<Lotto> lottos = lottoMachine.generate(money);
+            outputView.printPurchaseLottoList(lottos);
+
+            return lottos;
 
         } catch (IllegalArgumentException error) {
             outputView.printError(error);
             return purchaseLotto(money, lottoMachine);
+        }
+    }
+
+    private Lotto inputWinningLotto() {
+        try {
+            String winningLottoNumber = inputView.readWinningLottoNumber();
+            List<Integer> winningLottoNumbers = getWinningLottoNumbers(winningLottoNumber);
+
+            return new Lotto((winningLottoNumbers));
+
+        } catch (IllegalArgumentException error) {
+            outputView.printError(error);
+            return inputWinningLotto();
+        }
+    }
+
+    private List<Integer> getWinningLottoNumbers(String winningLottoNumber) {
+        try {
+            return Arrays.stream(winningLottoNumber.split(","))
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+        } catch (NumberFormatException error) {
+            throw new IllegalArgumentException(NUMBER_FORMAT_ERROR_MESSAGE);
         }
     }
 }

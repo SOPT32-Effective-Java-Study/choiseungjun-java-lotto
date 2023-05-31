@@ -20,7 +20,7 @@ public class OutputView {
     }
 
     public void inputPurchaseAmountMessage() {
-        println(INPUT_PURCHASE_AMOUNT);
+        println(INPUT_PURCHASE_AMOUNT_MESSAGE);
     }
 
     private <T> void println(T message) {
@@ -59,5 +59,9 @@ public class OutputView {
             joiner.add(number.getNumber().toString());
         }
         println(joiner.toString());
+    }
+
+    public void printInputWinningLottoMessage() {
+        println(INPUT_WINNING_LOTTO_NUMBER_MESSAGE);
     }
 }

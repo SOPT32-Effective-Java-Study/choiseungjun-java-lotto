@@ -1,7 +1,13 @@
 package lotto.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static lotto.constant.ErrorMessage.LOTTO_NUMBER_DUPLICATE_ERROR_MESSAGE;
+import static lotto.constant.ErrorMessage.LOTTO_NUMBER_SIZE_ERROR_MESSAGE;
+import static lotto.domain.constant.DomainConstant.LOTTO_NUMBER_COUNT;
 
 public class Lotto {
     private final List<LottoNumber> numbers;
@@ -16,23 +22,32 @@ public class Lotto {
     }
 
     private List<LottoNumber> validate(List<Integer> numbers) {
-        List<LottoNumber> lottoNumbers = new ArrayList<>();
-
         validateNumberSize(numbers);
+        validateDuplicate(numbers);
+        List<LottoNumber> lottoNumbers = generateLottoNumbers(numbers);
 
-        generateLottoNumbers(numbers, lottoNumbers);
         return lottoNumbers;
     }
 
-    private void generateLottoNumbers(List<Integer> numbers, List<LottoNumber> lottoNumbers) {
+    private List<LottoNumber> generateLottoNumbers(List<Integer> numbers) {
+        List<LottoNumber> lottoNumbers = new ArrayList<>();
         for (Integer number : numbers) {
             lottoNumbers.add(LottoNumber.from(number));
         }
+
+        return lottoNumbers;
     }
 
     private void validateNumberSize(List<Integer> numbers) {
-        if (numbers.size() != 6) {
-            throw new IllegalArgumentException();
+        if (numbers.size() != LOTTO_NUMBER_COUNT) {
+            throw new IllegalArgumentException(LOTTO_NUMBER_SIZE_ERROR_MESSAGE);
+        }
+    }
+
+    private void validateDuplicate(List<Integer> numbers) {
+        Set<Integer> removeDuplicatedNumbers = new HashSet<>(numbers);
+        if(removeDuplicatedNumbers.size() != LOTTO_NUMBER_COUNT) {
+            throw new IllegalArgumentException(LOTTO_NUMBER_DUPLICATE_ERROR_MESSAGE);
         }
     }
 }

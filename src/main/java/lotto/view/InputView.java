@@ -2,8 +2,6 @@ package lotto.view;
 
 import camp.nextstep.edu.missionutils.Console;
 
-import java.util.List;
-
 public class InputView {
 
     private final OutputView outputView = OutputView.newInstance();
@@ -18,9 +16,12 @@ public class InputView {
 
     public String readPurchaseAmount() {
         outputView.inputPurchaseAmountMessage();
-        String amount = read();
+        return read();
+    }
 
-        return amount;
+    public String readWinningLottoNumber() {
+        outputView.printInputWinningLottoMessage();
+        return read();
     }
 
 
