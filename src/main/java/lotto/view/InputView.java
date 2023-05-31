@@ -6,13 +6,10 @@ import static lotto.constant.ErrorMessage.NUMBER_FORMAT_ERROR_MESSAGE;
 
 public class InputView {
 
-    private final OutputView outputView = OutputView.newInstance();
+    private final OutputView outputView;
 
-    private InputView() {
-    }
-
-    public static InputView newInstance() {
-        return new InputView();
+    public InputView(OutputView outputView) {
+        this.outputView = outputView;
     }
 
 

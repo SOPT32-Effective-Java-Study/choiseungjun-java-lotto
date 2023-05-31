@@ -12,32 +12,8 @@ import static lotto.domain.constant.DomainConstant.*;
 
 public class OutputView {
 
-    private OutputView() {
-    }
-
-    public static OutputView newInstance() {
-        return new OutputView();
-    }
-
     public void inputPurchaseAmountMessage() {
         println(INPUT_PURCHASE_AMOUNT_MESSAGE);
-    }
-
-    private <T> void println(T message) {
-        System.out.println(message);
-    }
-
-    private <P1> void printf(String message, P1 param1) {
-        System.out.printf(message, param1);
-        printEnter();
-    }
-
-    private void printEnter() {
-        System.out.println();
-    }
-
-    public void printError(Exception error) {
-        println(ERROR_PREFIX + error.getMessage());
     }
 
     public void printPurchaseLottoList(List<Lotto> lottos) {
@@ -70,5 +46,23 @@ public class OutputView {
     public void printInputBonusNumberMessage() {
         printEnter();
         println(INPUT_BONUS_NUMBER_MESSAGE);
+    }
+
+
+    private <T> void println(T message) {
+        System.out.println(message);
+    }
+
+    private <P1> void printf(String message, P1 param1) {
+        System.out.printf(message, param1);
+        printEnter();
+    }
+
+    private void printEnter() {
+        System.out.println();
+    }
+
+    public void printError(Exception error) {
+        println(ERROR_PREFIX + error.getMessage());
     }
 }
