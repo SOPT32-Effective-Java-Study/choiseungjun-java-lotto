@@ -18,7 +18,7 @@ public class LottoMachine {
     private List<Lotto> generateLottos(int purchaseCount) {
         List<Lotto> lottos = new ArrayList<>();
 
-        for(int i = 0; i < purchaseCount; i++) {
+        for (int i = 0; i < purchaseCount; i++) {
             List<Integer> lottoNumbers = Randoms.pickUniqueNumbersInRange(START_LOTTO_NUMBER, END_LOTTO_NUMBER, LOTTO_NUMBER_COUNT);
             lottos.add(new Lotto(lottoNumbers));
         }

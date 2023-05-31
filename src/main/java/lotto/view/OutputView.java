@@ -26,6 +26,7 @@ public class OutputView {
     private <T> void println(T message) {
         System.out.println(message);
     }
+
     private <P1> void printf(String message, P1 param1) {
         System.out.printf(message, param1);
         printEnter();

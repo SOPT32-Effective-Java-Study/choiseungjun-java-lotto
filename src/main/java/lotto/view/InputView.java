@@ -35,6 +35,7 @@ public class InputView {
     private String read() {
         return Console.readLine();
     }
+
     private int readInt() {
         try {
             return Integer.parseInt(Console.readLine());

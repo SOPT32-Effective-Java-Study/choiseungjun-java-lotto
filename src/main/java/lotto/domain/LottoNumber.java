@@ -28,7 +28,7 @@ public class LottoNumber implements Comparable<LottoNumber> {
 
     private static void validateBonusNumberDuplicate(int bonusNumber, Lotto winningLotto) {
         for (LottoNumber lottoNumber : winningLotto.getNumbers()) {
-            if(lottoNumber.number == bonusNumber) {
+            if (lottoNumber.number == bonusNumber) {
                 throw new IllegalArgumentException(BONUS_NUMBER_DUPLICATE_ERROR_MESSAGE);
             }
         }
