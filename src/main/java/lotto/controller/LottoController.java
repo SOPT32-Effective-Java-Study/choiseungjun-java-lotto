@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static lotto.constant.ErrorMessage.NUMBER_FORMAT_ERROR_MESSAGE;
+import static lotto.domain.constant.DomainConstant.LOTTO_NUMBER_SEPARATOR;
 
 public class LottoController {
 
@@ -88,7 +89,7 @@ public class LottoController {
 
     private List<Integer> getWinningLottoNumbers(String winningLottoNumber) {
         try {
-            return Arrays.stream(winningLottoNumber.split(","))
+            return Arrays.stream(winningLottoNumber.split(LOTTO_NUMBER_SEPARATOR))
                     .map(Integer::parseInt)
                     .collect(Collectors.toList());
         } catch (NumberFormatException error) {

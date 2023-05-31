@@ -12,6 +12,7 @@ public class DomainConstant {
     public static String LOTTO_NUMBER_DELIMITER = ", ";
     public static String LOTTO_NUMBER_PREFIX = "[";
     public static String LOTTO_NUMBER_SUFFIX = "]";
+    public static String LOTTO_NUMBER_SEPARATOR = ",";
 
 
 }
