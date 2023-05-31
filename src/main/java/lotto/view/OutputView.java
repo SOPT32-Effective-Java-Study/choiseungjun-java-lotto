@@ -62,6 +62,12 @@ public class OutputView {
     }
 
     public void printInputWinningLottoMessage() {
+        printEnter();
         println(INPUT_WINNING_LOTTO_NUMBER_MESSAGE);
+    }
+
+    public void printInputBonusNumberMessage() {
+        printEnter();
+        println(INPUT_BONUS_NUMBER_MESSAGE);
     }
 }
