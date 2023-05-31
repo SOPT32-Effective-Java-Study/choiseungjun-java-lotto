@@ -18,7 +18,7 @@ public class OutputView {
 
     public void printPurchaseLottoList(List<Lotto> lottos) {
         printEnter();
-        printf("%d개를 구매했습니다.", lottos.size());
+        printf(PURCHASE_LOTTO_COUNT_INFO_MESSAGE, lottos.size());
         printLottos(lottos);
     }
 
