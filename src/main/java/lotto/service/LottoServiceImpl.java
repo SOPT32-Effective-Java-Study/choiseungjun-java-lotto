@@ -3,6 +3,7 @@ package lotto.service;
 import lotto.domain.Lotto;
 import lotto.domain.LottoNumber;
 import lotto.domain.LottoWinning;
+import lotto.domain.Money;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,6 +46,10 @@ public class LottoServiceImpl implements LottoService {
         return winnings;
     }
 
+    public float getProfitPercentage(Map<LottoWinning, Integer> winnings, Money money) {
+        return calculateProfitPercentage(money, calculateProfit(winnings));
+    }
+
 
     private Optional<LottoWinning> getLottoWinning(LottoNumber bonusNumber, List<LottoNumber> winningNumbers, Lotto purchaseLotto) {
         int matchCount;
@@ -85,6 +90,20 @@ public class LottoServiceImpl implements LottoService {
             winnings.put(lottoWinning, 0);
         }
         return winnings;
+    }
+
+    private float calculateProfit(Map<LottoWinning, Integer> winnings) {
+        float profit = 0.0f;
+
+        for (LottoWinning lottoWinning : LottoWinning.values()) {
+            Integer winningCount = winnings.get(lottoWinning);
+            profit += lottoWinning.getReward() * winningCount;
+        }
+        return profit;
+    }
+
+    private float calculateProfitPercentage(Money money, float profitPercentage) {
+        return (profitPercentage / money.getAmount()) * 100;
     }
 
 

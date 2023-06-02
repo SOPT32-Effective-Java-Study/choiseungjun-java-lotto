@@ -85,27 +85,10 @@ public class LottoController {
 
     private void printWinningStatistics(List<LottoWinning> lottoWinnings, Money money) {
         Map<LottoWinning, Integer> winnings = lottoService.getWinnings(lottoWinnings);
+        float profitPercentage = lottoService.getProfitPercentage(winnings, money);
 
-        outputView.printWinningStatisticsMessage(winnings, getProfitPercentage(winnings, money));
+        outputView.printWinningStatisticsMessage(winnings, profitPercentage);
 
     }
 
-
-    private float getProfitPercentage(Map<LottoWinning, Integer> winnings, Money money) {
-        return calculateProfitPercentage(money, calculateProfit(winnings));
-    }
-
-    private float calculateProfit(Map<LottoWinning, Integer> winnings) {
-        float profit = 0.0f;
-
-        for (LottoWinning lottoWinning : LottoWinning.values()) {
-            Integer winningCount = winnings.get(lottoWinning);
-            profit += lottoWinning.getReward() * winningCount;
-        }
-        return profit;
-    }
-
-    private float calculateProfitPercentage(Money money, float profitPercentage) {
-        return (profitPercentage / money.getAmount()) * 100;
-    }
 }
