@@ -12,11 +12,12 @@ public class LottoController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final LottoService lottoService = new LottoService();
+    private final LottoService lottoService;
 
-    public LottoController(InputView inputView, OutputView outputView) {
+    public LottoController(InputView inputView, OutputView outputView, LottoService lottoService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.lottoService = lottoService;
     }
 
 
