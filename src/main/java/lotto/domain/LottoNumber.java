@@ -5,7 +5,7 @@ import static lotto.constant.ErrorMessage.LOTTO_NUMBER_RANGE_ERROR_MESSAGE;
 import static lotto.domain.constant.DomainConstant.END_LOTTO_NUMBER;
 import static lotto.domain.constant.DomainConstant.START_LOTTO_NUMBER;
 
-public class LottoNumber implements Comparable<LottoNumber> {
+public class LottoNumber{
     private int number;
 
     private LottoNumber(int number) {
@@ -41,8 +41,14 @@ public class LottoNumber implements Comparable<LottoNumber> {
         }
     }
 
+
     @Override
-    public int compareTo(LottoNumber o) {
-        return this.number - o.number;
+    public boolean equals(Object obj) {
+        LottoNumber lottoNumber = (LottoNumber) obj;
+
+        if(lottoNumber.number == this.number){
+            return true;
+        }
+        return false;
     }
 }

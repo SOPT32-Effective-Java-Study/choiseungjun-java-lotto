@@ -1,18 +1,14 @@
 package lotto.controller;
 
-import lotto.domain.Lotto;
-import lotto.domain.LottoMachine;
-import lotto.domain.LottoNumber;
-import lotto.domain.Money;
+import lotto.domain.*;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static lotto.constant.ErrorMessage.NUMBER_FORMAT_ERROR_MESSAGE;
-import static lotto.domain.constant.DomainConstant.LOTTO_NUMBER_SEPARATOR;
+import static lotto.domain.constant.DomainConstant.*;
 
 public class LottoController {
 
@@ -34,7 +30,8 @@ public class LottoController {
         Lotto winningLotto = inputWinningLotto();
         LottoNumber bonusNumber = inputBonusNumber(winningLotto);
 
-
+        List<LottoWinning> lottoWinnings = getLottoWinnings(lottos, winningLotto, bonusNumber);
+        printWinningStatistics(lottoWinnings, money);
     }
 
     private Money inputPurchaseAmount() {
@@ -93,5 +90,99 @@ public class LottoController {
         } catch (NumberFormatException error) {
             throw new IllegalArgumentException(NUMBER_FORMAT_ERROR_MESSAGE);
         }
+    }
+
+    private List<LottoWinning> getLottoWinnings(List<Lotto> purchaseLottos, Lotto winningLotto, LottoNumber bonusNumber) {
+        List<LottoWinning> winnings = new ArrayList<>();
+        List<LottoNumber> winningNumbers = winningLotto.getNumbers();
+
+        for (Lotto purchaseLotto : purchaseLottos) {
+            Optional<LottoWinning> lottoWinning = getLottoWinning(bonusNumber, winningNumbers, purchaseLotto);
+            if(lottoWinning.isEmpty()) {
+                continue;
+            }
+            winnings.add(lottoWinning.get());
+        }
+        
+        return winnings;
+    }
+
+    private Optional<LottoWinning> getLottoWinning(LottoNumber bonusNumber, List<LottoNumber> winningNumbers, Lotto purchaseLotto) {
+        int winningCount;
+        List<LottoNumber> purchaseLottoNumbers = purchaseLotto.getNumbers();
+
+        winningCount = getWinningCount(winningNumbers, purchaseLottoNumbers);
+        if(winningCount < FIFTH_PRIZE_COUNT) {
+            return Optional.empty();
+        }
+        return Optional.of(getLottoWinning(winningCount, purchaseLottoNumbers.contains(bonusNumber)));
+    }
+
+    private int getWinningCount(List<LottoNumber> winningNumbers, List<LottoNumber> purchaseLottoNumbers) {
+        int winningCount = 0;
+
+        for (LottoNumber lottoNumber : purchaseLottoNumbers) {
+            if(winningNumbers.contains(lottoNumber)) {
+                winningCount +=1;
+            }
+        }
+        return winningCount;
+    }
+
+    private LottoWinning getLottoWinning(int winningCount, boolean isBonusNumberCollected) {
+        if (winningCount == FIFTH_PRIZE_COUNT) {
+            return LottoWinning.FIFTH_PRIZE;
+
+        } else if (winningCount == FOURTH_PRIZE_COUNT) {
+            return LottoWinning.FOURTH_PRIZE;
+
+        } else if(winningCount == THIRD_PRIZE_COUNT) {
+            if (isBonusNumberCollected) {
+                return LottoWinning.SECOND_PRIZE;
+            }
+            return LottoWinning.THIRD_PRIZE;
+
+        }
+        return LottoWinning.FIRST_PRIZE;
+    }
+
+    private void printWinningStatistics(List<LottoWinning> lottoWinnings, Money money) {
+        Map<LottoWinning, Integer> winnings = createWinningMap();
+        applyWinningData(lottoWinnings, winnings);
+
+        outputView.printWinningStatisticsMessage(winnings, getProfitPercentage(winnings, money));
+
+    }
+
+    private void applyWinningData(List<LottoWinning> lottoWinnings, Map<LottoWinning, Integer> winnings) {
+        for (LottoWinning lottoWinning : lottoWinnings) {
+            winnings.replace(lottoWinning, winnings.get(lottoWinning)+1);
+        }
+    }
+
+    private Map<LottoWinning, Integer> createWinningMap() {
+        Map<LottoWinning, Integer> winnings = new LinkedHashMap<>();
+        for (LottoWinning lottoWinning : LottoWinning.values()) {
+            winnings.put(lottoWinning, 0);
+        }
+        return winnings;
+    }
+
+    private float getProfitPercentage(Map<LottoWinning, Integer> winnings, Money money) {
+        return calculateProfitPercentage(money, calculateProfit(winnings));
+    }
+
+    private float calculateProfit(Map<LottoWinning, Integer> winnings) {
+        float profit = 0.0f;
+
+        for (LottoWinning lottoWinning : LottoWinning.values()) {
+            Integer winningCount = winnings.get(lottoWinning);
+            profit += lottoWinning.getReward() * winningCount;
+        }
+        return profit;
+    }
+
+    private float calculateProfitPercentage(Money money, float profitPercentage) {
+        return (profitPercentage / money.getAmount()) * 100;
     }
 }
