@@ -17,6 +17,7 @@ public class LottoService {
             return Arrays.stream(winningLottoNumber.split(LOTTO_NUMBER_SEPARATOR))
                     .map(Integer::parseInt)
                     .collect(Collectors.toList());
+
         } catch (NumberFormatException error) {
             throw new IllegalArgumentException(NUMBER_FORMAT_ERROR_MESSAGE);
         }
@@ -38,14 +39,14 @@ public class LottoService {
     }
 
     private Optional<LottoWinning> getLottoWinning(LottoNumber bonusNumber, List<LottoNumber> winningNumbers, Lotto purchaseLotto) {
-        int winningCount;
+        int matchCount;
         List<LottoNumber> purchaseLottoNumbers = purchaseLotto.getNumbers();
 
-        winningCount = getWinningCount(winningNumbers, purchaseLottoNumbers);
-        if (winningCount < FIFTH_PRIZE_COUNT) {
+        matchCount = getWinningCount(winningNumbers, purchaseLottoNumbers);
+        if (matchCount < FIFTH_PRIZE_COUNT) {
             return Optional.empty();
         }
-        return Optional.of(getLottoWinning(winningCount, purchaseLottoNumbers.contains(bonusNumber)));
+        return Optional.of(getLottoWinning(matchCount, purchaseLottoNumbers.contains(bonusNumber)));
     }
 
     private int getWinningCount(List<LottoNumber> winningNumbers, List<LottoNumber> purchaseLottoNumbers) {
@@ -59,21 +60,8 @@ public class LottoService {
         return winningCount;
     }
 
-    private LottoWinning getLottoWinning(int winningCount, boolean isBonusNumberCollected) {
-        if (winningCount == FIFTH_PRIZE_COUNT) {
-            return LottoWinning.FIFTH_PRIZE;
-
-        } else if (winningCount == FOURTH_PRIZE_COUNT) {
-            return LottoWinning.FOURTH_PRIZE;
-
-        } else if (winningCount == THIRD_PRIZE_COUNT) {
-            if (isBonusNumberCollected) {
-                return LottoWinning.SECOND_PRIZE;
-            }
-            return LottoWinning.THIRD_PRIZE;
-
-        }
-        return LottoWinning.FIRST_PRIZE;
+    private LottoWinning getLottoWinning(int matchCount, boolean isBonusNumberMatched) {
+        return LottoWinning.findLottoWinning(matchCount, isBonusNumberMatched);
     }
 
     public Map<LottoWinning, Integer> getWinnings(List<LottoWinning> lottoWinnings) {
