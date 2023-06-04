@@ -11,7 +11,7 @@ import java.util.StringJoiner;
 
 import static lotto.constant.ConsoleMessage.*;
 import static lotto.constant.ErrorMessage.ERROR_PREFIX;
-import static lotto.domain.constant.DomainConstant.*;
+import static lotto.domain.constant.LottoConstant.*;
 
 public class OutputView {
 

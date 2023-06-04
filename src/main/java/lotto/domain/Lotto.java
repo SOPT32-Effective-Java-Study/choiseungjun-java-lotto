@@ -7,7 +7,7 @@ import java.util.Set;
 
 import static lotto.constant.ErrorMessage.LOTTO_NUMBER_DUPLICATE_ERROR_MESSAGE;
 import static lotto.constant.ErrorMessage.LOTTO_NUMBER_SIZE_ERROR_MESSAGE;
-import static lotto.domain.constant.DomainConstant.LOTTO_NUMBER_COUNT;
+import static lotto.domain.constant.LottoConstant.LOTTO_NUMBER_COUNT;
 
 public class Lotto {
     private final List<LottoNumber> numbers;

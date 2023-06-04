@@ -3,7 +3,7 @@ package lotto.domain;
 
 import static lotto.constant.ErrorMessage.MONEY_AMOUNT_UNIT_ERROR_MESSAGE;
 import static lotto.constant.ErrorMessage.NUMBER_FORMAT_ERROR_MESSAGE;
-import static lotto.domain.constant.DomainConstant.MONEY_AMOUNT_UNIT;
+import static lotto.domain.constant.LottoConstant.MONEY_AMOUNT_UNIT;
 
 public class Money {
 

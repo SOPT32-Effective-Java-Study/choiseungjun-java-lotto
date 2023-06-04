@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static lotto.constant.ErrorMessage.NUMBER_FORMAT_ERROR_MESSAGE;
-import static lotto.domain.constant.DomainConstant.*;
+import static lotto.domain.constant.LottoConstant.*;
 
 public class LottoServiceImpl implements LottoService {
 

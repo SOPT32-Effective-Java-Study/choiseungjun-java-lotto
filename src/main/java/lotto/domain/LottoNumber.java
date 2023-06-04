@@ -2,8 +2,8 @@ package lotto.domain;
 
 import static lotto.constant.ErrorMessage.BONUS_NUMBER_DUPLICATE_ERROR_MESSAGE;
 import static lotto.constant.ErrorMessage.LOTTO_NUMBER_RANGE_ERROR_MESSAGE;
-import static lotto.domain.constant.DomainConstant.END_LOTTO_NUMBER;
-import static lotto.domain.constant.DomainConstant.START_LOTTO_NUMBER;
+import static lotto.domain.constant.LottoConstant.END_LOTTO_NUMBER;
+import static lotto.domain.constant.LottoConstant.START_LOTTO_NUMBER;
 
 public class LottoNumber{
     private int number;
