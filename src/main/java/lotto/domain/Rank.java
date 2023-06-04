@@ -3,7 +3,8 @@ package lotto.domain;
 
 import java.util.stream.Stream;
 
-public enum LottoWinning {
+// 클래스 네이밍 가독성 향상
+public enum Rank {
 
     FIFTH_PRIZE(3, 5_000, false),
     FOURTH_PRIZE(4, 50_000, false),
@@ -16,7 +17,7 @@ public enum LottoWinning {
     private final int reward;
     private final boolean isBonusNumberMatched;
 
-    LottoWinning(int matchingNumberCount, int reward, boolean isBonusNumberMatched) {
+    Rank(int matchingNumberCount, int reward, boolean isBonusNumberMatched) {
         this.matchingNumberCount = matchingNumberCount;
         this.reward = reward;
         this.isBonusNumberMatched = isBonusNumberMatched;
@@ -30,11 +31,12 @@ public enum LottoWinning {
         return reward;
     }
 
-    public static LottoWinning findLottoWinning(int matchingNumberCount, boolean isBonusNumberMatched) {
+    // 예외 메시지 추가
+    public static Rank findLottoWinning(int matchingNumberCount, boolean isBonusNumberMatched) {
         return Stream.of(values())
-                .filter(w -> w.matchingNumberCount == matchingNumberCount)
-                .filter(w -> w.isBonusNumberMatched == isBonusNumberMatched)
+                .filter(rank -> rank.matchingNumberCount == matchingNumberCount)
+                .filter(rank -> rank.isBonusNumberMatched == isBonusNumberMatched)
                 .findAny()
-                .get();
+                .orElseThrow(() -> new IllegalArgumentException());
     }
 }

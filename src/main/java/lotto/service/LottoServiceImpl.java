@@ -2,7 +2,7 @@ package lotto.service;
 
 import lotto.domain.Lotto;
 import lotto.domain.LottoNumber;
-import lotto.domain.LottoWinning;
+import lotto.domain.Rank;
 import lotto.domain.Money;
 
 import java.util.*;
@@ -24,12 +24,12 @@ public class LottoServiceImpl implements LottoService {
         }
     }
 
-    public List<LottoWinning> getLottoWinnings(List<Lotto> purchaseLottos, Lotto winningLotto, LottoNumber bonusNumber) {
-        List<LottoWinning> winnings = new ArrayList<>();
+    public List<Rank> getLottoWinnings(List<Lotto> purchaseLottos, Lotto winningLotto, LottoNumber bonusNumber) {
+        List<Rank> winnings = new ArrayList<>();
         List<LottoNumber> winningNumbers = winningLotto.getNumbers();
 
         for (Lotto purchaseLotto : purchaseLottos) {
-            Optional<LottoWinning> lottoWinning = getLottoWinning(bonusNumber, winningNumbers, purchaseLotto);
+            Optional<Rank> lottoWinning = getLottoWinning(bonusNumber, winningNumbers, purchaseLotto);
             if (lottoWinning.isEmpty()) {
                 continue;
             }
@@ -39,19 +39,19 @@ public class LottoServiceImpl implements LottoService {
         return winnings;
     }
 
-    public Map<LottoWinning, Integer> getWinnings(List<LottoWinning> lottoWinnings) {
-        Map<LottoWinning, Integer> winnings = createWinningMap();
-        applyWinningData(lottoWinnings, winnings);
+    public Map<Rank, Integer> getWinnings(List<Rank> ranks) {
+        Map<Rank, Integer> winnings = createWinningMap();
+        applyWinningData(ranks, winnings);
 
         return winnings;
     }
 
-    public float getProfitPercentage(Map<LottoWinning, Integer> winnings, Money money) {
+    public float getProfitPercentage(Map<Rank, Integer> winnings, Money money) {
         return calculateProfitPercentage(money, calculateProfit(winnings));
     }
 
 
-    private Optional<LottoWinning> getLottoWinning(LottoNumber bonusNumber, List<LottoNumber> winningNumbers, Lotto purchaseLotto) {
+    private Optional<Rank> getLottoWinning(LottoNumber bonusNumber, List<LottoNumber> winningNumbers, Lotto purchaseLotto) {
         int matchCount;
         List<LottoNumber> purchaseLottoNumbers = purchaseLotto.getNumbers();
 
@@ -73,31 +73,31 @@ public class LottoServiceImpl implements LottoService {
         return winningCount;
     }
 
-    private LottoWinning getLottoWinning(int matchCount, boolean isBonusNumberMatched) {
-        return LottoWinning.findLottoWinning(matchCount, isBonusNumberMatched);
+    private Rank getLottoWinning(int matchCount, boolean isBonusNumberMatched) {
+        return Rank.findLottoWinning(matchCount, isBonusNumberMatched);
     }
 
 
-    private void applyWinningData(List<LottoWinning> lottoWinnings, Map<LottoWinning, Integer> winnings) {
-        for (LottoWinning lottoWinning : lottoWinnings) {
-            winnings.replace(lottoWinning, winnings.get(lottoWinning)+1);
+    private void applyWinningData(List<Rank> ranks, Map<Rank, Integer> winnings) {
+        for (Rank rank : ranks) {
+            winnings.replace(rank, winnings.get(rank)+1);
         }
     }
 
-    private Map<LottoWinning, Integer> createWinningMap() {
-        Map<LottoWinning, Integer> winnings = new LinkedHashMap<>();
-        for (LottoWinning lottoWinning : LottoWinning.values()) {
-            winnings.put(lottoWinning, 0);
+    private Map<Rank, Integer> createWinningMap() {
+        Map<Rank, Integer> winnings = new LinkedHashMap<>();
+        for (Rank rank : Rank.values()) {
+            winnings.put(rank, 0);
         }
         return winnings;
     }
 
-    private float calculateProfit(Map<LottoWinning, Integer> winnings) {
+    private float calculateProfit(Map<Rank, Integer> winnings) {
         float profit = 0.0f;
 
-        for (LottoWinning lottoWinning : LottoWinning.values()) {
-            Integer winningCount = winnings.get(lottoWinning);
-            profit += lottoWinning.getReward() * winningCount;
+        for (Rank rank : Rank.values()) {
+            Integer winningCount = winnings.get(rank);
+            profit += rank.getReward() * winningCount;
         }
         return profit;
     }

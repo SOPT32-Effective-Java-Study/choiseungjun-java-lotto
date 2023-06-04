@@ -2,7 +2,7 @@ package lotto.view;
 
 import lotto.domain.Lotto;
 import lotto.domain.LottoNumber;
-import lotto.domain.LottoWinning;
+import lotto.domain.Rank;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -51,7 +51,7 @@ public class OutputView {
         println(INPUT_BONUS_NUMBER_MESSAGE);
     }
 
-    public void printWinningStatisticsMessage(Map<LottoWinning, Integer> winnings, float profitPercentage) {
+    public void printWinningStatisticsMessage(Map<Rank, Integer> winnings, float profitPercentage) {
         printEnter();
         println(WINNING_STATISTICS_MESSAGE);
 
@@ -64,22 +64,22 @@ public class OutputView {
         printEnter();
     }
 
-    private void printLottoWinnings(Map<LottoWinning, Integer> winnings) {
+    private void printLottoWinnings(Map<Rank, Integer> winnings) {
         DecimalFormat winningRewardFormat = new DecimalFormat(WINNING_REWARD_FORMAT);
 
-        for (LottoWinning lottoWinning : LottoWinning.values()) {
-            printLottoWinning(winningRewardFormat, lottoWinning, winnings.get(lottoWinning));
+        for (Rank rank : Rank.values()) {
+            printLottoWinning(winningRewardFormat, rank, winnings.get(rank));
         }
     }
 
-    private void printLottoWinning(DecimalFormat winningRewardFormat, LottoWinning lottoWinning, int winningCount) {
-        String reward = winningRewardFormat.format(lottoWinning.getReward());
+    private void printLottoWinning(DecimalFormat winningRewardFormat, Rank rank, int winningCount) {
+        String reward = winningRewardFormat.format(rank.getReward());
 
-        if (lottoWinning == LottoWinning.SECOND_PRIZE) {
-            printf(LOTTO_SECOND_PRIZE_COLLECT_INFO_MESSAGE, lottoWinning.getMatchingNumberCount(), reward, winningCount);
+        if (rank == Rank.SECOND_PRIZE) {
+            printf(LOTTO_SECOND_PRIZE_COLLECT_INFO_MESSAGE, rank.getMatchingNumberCount(), reward, winningCount);
             return;
         }
-        printf(LOTTO_COLLECT_INFO_MESSAGE, lottoWinning.getMatchingNumberCount(), reward, winningCount);
+        printf(LOTTO_COLLECT_INFO_MESSAGE, rank.getMatchingNumberCount(), reward, winningCount);
     }
 
 
