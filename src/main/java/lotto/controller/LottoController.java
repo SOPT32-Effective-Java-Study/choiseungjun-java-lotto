@@ -20,7 +20,6 @@ public class LottoController {
         this.lottoService = lottoService;
     }
 
-
     public void run() {
         Money money = inputPurchaseAmount();
         List<Lotto> purchaseLottos = purchaseLotto(money, new LottoMachine());
@@ -28,8 +27,8 @@ public class LottoController {
         Lotto winningLotto = inputWinningLotto();
         LottoNumber bonusNumber = inputBonusNumber(winningLotto);
 
-        List<LottoWinning> lottoWinnings = getLottoWinnings(purchaseLottos, winningLotto, bonusNumber);
-        printWinningStatistics(lottoWinnings, money);
+        List<Rank> ranks = getLottoWinnings(purchaseLottos, winningLotto, bonusNumber);
+        printWinningStatistics(ranks, money);
     }
 
     private Money inputPurchaseAmount() {
@@ -79,12 +78,12 @@ public class LottoController {
         }
     }
 
-    private List<LottoWinning> getLottoWinnings(List<Lotto> purchaseLottos, Lotto winningLotto, LottoNumber bonusNumber) {
+    private List<Rank> getLottoWinnings(List<Lotto> purchaseLottos, Lotto winningLotto, LottoNumber bonusNumber) {
         return lottoService.getLottoWinnings(purchaseLottos, winningLotto, bonusNumber);
     }
 
-    private void printWinningStatistics(List<LottoWinning> lottoWinnings, Money money) {
-        Map<LottoWinning, Integer> winnings = lottoService.getWinnings(lottoWinnings);
+    private void printWinningStatistics(List<Rank> ranks, Money money) {
+        Map<Rank, Integer> winnings = lottoService.getWinnings(ranks);
         float profitPercentage = lottoService.getProfitPercentage(winnings, money);
 
         outputView.printWinningStatisticsMessage(winnings, profitPercentage);
