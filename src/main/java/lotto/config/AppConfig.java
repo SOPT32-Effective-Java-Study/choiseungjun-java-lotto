@@ -6,21 +6,36 @@ import lotto.service.LottoServiceImpl;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
-public class AppConfig {
+import java.util.Optional;
 
-    public static InputView inputView() {
+// AppConfig에 대해서 고민해보자
+public class AppConfig {
+    private static final InputView inputView = inputView();
+    private static final OutputView outputView = outputView();
+    private static final LottoController lottoController = lottoController();
+    private static final LottoService lottoService = lottoService();
+
+    public AppConfig() {
+    }
+
+    private static InputView inputView() {
         return new InputView(outputView());
     }
 
-    public static OutputView outputView() {
+    private static OutputView outputView() {
         return new OutputView();
     }
 
-    public static LottoController lottoController() {
+    private static LottoController lottoController() {
         return new LottoController(inputView(), outputView(), lottoService());
     }
 
-    public static LottoService lottoService() {
+    private static LottoService lottoService() {
         return new LottoServiceImpl();
+    }
+
+
+    public LottoController getLottoController() {
+        return lottoController;
     }
 }
