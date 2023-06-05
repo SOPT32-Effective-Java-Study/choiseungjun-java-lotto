@@ -6,9 +6,7 @@ import lotto.service.LottoServiceImpl;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
-import java.util.Optional;
 
-// AppConfig에 대해서 고민해보자
 public class AppConfig {
     private static final InputView inputView = inputView();
     private static final OutputView outputView = outputView();
