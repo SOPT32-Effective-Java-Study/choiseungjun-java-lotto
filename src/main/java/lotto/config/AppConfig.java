@@ -8,13 +8,6 @@ import lotto.view.OutputView;
 
 
 public class AppConfig {
-    private static final InputView inputView = inputView();
-    private static final OutputView outputView = outputView();
-    private static final LottoController lottoController = lottoController();
-    private static final LottoService lottoService = lottoService();
-
-    public AppConfig() {
-    }
 
     private static InputView inputView() {
         return new InputView(outputView());
@@ -34,6 +27,6 @@ public class AppConfig {
 
 
     public LottoController getLottoController() {
-        return lottoController;
+        return lottoController();
     }
 }
