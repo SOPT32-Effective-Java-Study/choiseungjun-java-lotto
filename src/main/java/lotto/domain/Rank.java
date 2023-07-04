@@ -27,7 +27,11 @@ public enum Rank {
         return matchingNumberCount;
     }
 
-    public Integer getReward() {
+    public int calculateReward(int count) {
+        return count * reward;
+    }
+
+    public int getReward() {
         return reward;
     }
 

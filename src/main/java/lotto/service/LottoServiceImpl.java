@@ -98,8 +98,8 @@ public class LottoServiceImpl implements LottoService {
         float profit = 0.0f;
 
         for (Rank rank : Rank.values()) {
-            Integer winningCount = winnings.get(rank);
-            profit += rank.getReward() * winningCount;
+            int winningCount = winnings.get(rank);
+            profit += rank.calculateReward(winningCount);
         }
         return profit;
     }
