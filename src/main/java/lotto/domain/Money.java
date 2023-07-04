@@ -18,11 +18,6 @@ public class Money {
         return new Money(amount);
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
-
     private int validate(String inputAmount) {
         int amount = validateFormat(inputAmount);
         validateAmountValue(amount);
@@ -47,5 +42,10 @@ public class Money {
         if (amount == 0) {
             throw new IllegalArgumentException(MONEY_AMOUNT_UNIT_ERROR_MESSAGE);
         }
+    }
+
+
+    public int getAmount() {
+        return amount;
     }
 }
