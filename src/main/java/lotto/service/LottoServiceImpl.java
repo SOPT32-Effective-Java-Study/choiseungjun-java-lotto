@@ -41,7 +41,7 @@ public class LottoServiceImpl implements LottoService {
         return winnings;
     }
 
-    public Map<Rank, Integer> getWinnings(List<Rank> ranks) {
+    public Map<Rank, Integer> getResult(List<Rank> ranks) {
         Map<Rank, Integer> winnings = createWinningMap();
         applyWinningData(ranks, winnings);
 

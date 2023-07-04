@@ -7,7 +7,7 @@ import static lotto.constant.ErrorMessage.LOTTO_NUMBER_RANGE_ERROR_MESSAGE;
 import static lotto.domain.constant.LottoConstant.END_LOTTO_NUMBER;
 import static lotto.domain.constant.LottoConstant.START_LOTTO_NUMBER;
 
-public class LottoNumber{
+public class LottoNumber {
     private int number;
 
     private LottoNumber(int number) {
@@ -48,7 +48,7 @@ public class LottoNumber{
     public boolean equals(Object obj) {
         LottoNumber lottoNumber = (LottoNumber) obj;
 
-        if(lottoNumber.number == this.number){
+        if (lottoNumber.number == this.number) {
             return true;
         }
         return false;

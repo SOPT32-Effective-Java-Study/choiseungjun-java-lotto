@@ -80,7 +80,7 @@ public class LottoController {
     }
 
     private void printWinningStatistics(List<Rank> ranks, Money money) {
-        Map<Rank, Integer> winnings = lottoService.getWinnings(ranks);
+        Map<Rank, Integer> winnings = lottoService.getResult(ranks);
         float profitPercentage = lottoService.getProfitPercentage(winnings, money);
 
         outputView.printWinningStatisticsMessage(winnings, profitPercentage);
