@@ -13,11 +13,13 @@ import static lotto.domain.constant.LottoConstant.*;
 
 public class LottoServiceImpl implements LottoService {
 
-    public List<Integer> getWinningLottoNumbers(String winningLottoNumber) {
+    public Lotto formatWinningLotto(String winningLottoNumber) {
         try {
-            return Arrays.stream(winningLottoNumber.split(LOTTO_NUMBER_SEPARATOR))
+            List<Integer> lottoNumbers = Arrays.stream(winningLottoNumber.split(LOTTO_NUMBER_SEPARATOR))
                     .map(Integer::parseInt)
                     .collect(Collectors.toList());
+
+            return new Lotto(lottoNumbers);
 
         } catch (NumberFormatException error) {
             throw new IllegalArgumentException(NUMBER_FORMAT_ERROR_MESSAGE);

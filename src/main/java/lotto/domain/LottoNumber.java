@@ -1,5 +1,7 @@
 package lotto.domain;
 
+import java.util.List;
+
 import static lotto.constant.ErrorMessage.BONUS_NUMBER_DUPLICATE_ERROR_MESSAGE;
 import static lotto.constant.ErrorMessage.LOTTO_NUMBER_RANGE_ERROR_MESSAGE;
 import static lotto.domain.constant.LottoConstant.END_LOTTO_NUMBER;
@@ -21,13 +23,13 @@ public class LottoNumber{
         return new LottoNumber(number);
     }
 
-    public static LottoNumber bonusNumberOf(int bonusNumber, Lotto winningLotto) {
-        validateBonusNumberDuplicate(bonusNumber, winningLotto);
+    public static LottoNumber bonusNumberOf(int bonusNumber, List<LottoNumber> winningLottoNumbers) {
+        validateBonusNumberDuplicate(bonusNumber, winningLottoNumbers);
         return new LottoNumber(bonusNumber);
     }
 
-    private static void validateBonusNumberDuplicate(int bonusNumber, Lotto winningLotto) {
-        for (LottoNumber lottoNumber : winningLotto.getNumbers()) {
+    private static void validateBonusNumberDuplicate(int bonusNumber, List<LottoNumber> winningLottoNumbers) {
+        for (LottoNumber lottoNumber : winningLottoNumbers) {
             if (lottoNumber.number == bonusNumber) {
                 throw new IllegalArgumentException(BONUS_NUMBER_DUPLICATE_ERROR_MESSAGE);
             }

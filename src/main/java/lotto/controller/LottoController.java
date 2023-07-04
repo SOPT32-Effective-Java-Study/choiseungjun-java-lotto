@@ -24,7 +24,7 @@ public class LottoController {
         Money money = inputPurchaseAmount();
         List<Lotto> purchaseLottos = purchaseLotto(money, new LottoMachine());
 
-        Lotto winningLotto = inputWinningLotto();
+        Lotto winningLotto = generateWinningLotto();
         LottoNumber bonusNumber = inputBonusNumber(winningLotto);
 
         List<Rank> ranks = getLottoWinnings(purchaseLottos, winningLotto, bonusNumber);
@@ -54,22 +54,19 @@ public class LottoController {
         }
     }
 
-    private Lotto inputWinningLotto() {
+    private Lotto generateWinningLotto() {
         try {
-            String winningLottoNumber = inputView.readWinningLottoNumber();
-            List<Integer> winningLottoNumbers = lottoService.getWinningLottoNumbers(winningLottoNumber);
-
-            return new Lotto((winningLottoNumbers));
+            return lottoService.formatWinningLotto(inputView.readWinningLottoNumber());
 
         } catch (IllegalArgumentException error) {
             outputView.printError(error);
-            return inputWinningLotto();
+            return generateWinningLotto();
         }
     }
 
     private LottoNumber inputBonusNumber(Lotto winningLotto) {
         try {
-            LottoNumber bonusNumber = LottoNumber.bonusNumberOf(inputView.readBonusNumber(), winningLotto);
+            LottoNumber bonusNumber = LottoNumber.bonusNumberOf(inputView.readBonusNumber(), winningLotto.getNumbers());
             return bonusNumber;
 
         } catch (IllegalArgumentException error) {
