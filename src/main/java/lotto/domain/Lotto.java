@@ -13,20 +13,17 @@ public class Lotto {
     private final List<LottoNumber> numbers;
 
     public Lotto(List<Integer> numbers) {
-        List<LottoNumber> lottoNumbers = validate(numbers);
-        this.numbers = lottoNumbers;
+        validate(numbers);
+        this.numbers = generateLottoNumbers(numbers);;
     }
 
     public List<LottoNumber> getNumbers() {
         return numbers;
     }
 
-    private List<LottoNumber> validate(List<Integer> numbers) {
+    private void validate(List<Integer> numbers) {
         validateNumberSize(numbers);
         validateDuplicate(numbers);
-        List<LottoNumber> lottoNumbers = generateLottoNumbers(numbers);
-
-        return lottoNumbers;
     }
 
     private List<LottoNumber> generateLottoNumbers(List<Integer> numbers) {
